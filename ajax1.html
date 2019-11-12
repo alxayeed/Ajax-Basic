@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX1-text File</title>
+</head>
+<body>
+<button id='button'>GET TEXT HERE!</button>
+<br><br>
+<div id='text'>
+	
+</div>
+
+<script>
+//Event listener
+document.getElementById('button').addEventListener('click',loadtext);
+
+function loadtext(){
+	//XHR object
+	var xhr = new XMLHttpRequest();
+
+	//OPEN - type,url/file,async
+	xhr.open('GET','sample.txt',true);
+
+	// console.log('READYSTATE-',xhr.readyState);//1
+
+	//OPTIONAl - used for loading contents
+	// xhr.onprogress = function(){
+	// 	console.log('READYSTATE-',xhr.readyState);//3
+	// }
+
+	xhr.onload = function(){
+		// console.log('READYSTATE-',xhr.readyState);//4
+		if(this.status ==200){
+			document.getElementById('text').innerHTML = this.responseText
+		}
+		else if(this.status==404){
+			document.getElementById('text').innerHTML = 'File not Found'
+		}
+	}
+
+	//error handler for onload
+	xhr.onerror = function(){
+		console.log('ERROR OCCURED!')
+	}
+
+	//previously used instead of onload
+	// xhr.onreadystatechange = function(){
+	// 	console.log('READYSTATE-',xhr.readyState);//1,2,3,4
+	// 	if(this.readyState==4 && this.status == 200){
+	// 		// console.log(this.responseText);
+	// 	}
+	// }
+	//sends request
+	xhr.send()
+
+	
+}
+
+//HTTP statuses
+//200 - ok
+//403- Forbidden
+//404 - Not Found
+
+//Readystate Values
+//0 - request not initialized
+//1 - server connection established
+//2 - request recieved
+//3 - request processing
+//4 - request finished and response is ready
+
+
+
+</script>
+</body>
+</html>
